@@ -1,0 +1,22 @@
+model:
+  name: qwen2-7b
+  model_id: Qwen/Qwen2-7B-Instruct
+  hidden_dim: 3584
+  num_layers: 28
+  eval_only: true
+
+generation:
+  num_runs: 5
+  max_new_tokens: 16384
+  temperature: 0.6
+  top_p: 0.95
+  seed: 42
+
+paths:
+  problems: data/datasets/selected_500.parquet
+
+  pipeline:
+    cot_traces: ${IRT_OUTPUTS_ROOT}/local/code/qwen2-7b/cot_traces.jsonl
+
+  analysis:
+    cot_analysis: ${IRT_RESULTS_ROOT}/code/qwen2-7b/cot_analysis/cot_analysis.parquet

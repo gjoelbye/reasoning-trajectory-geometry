@@ -1,0 +1,16 @@
+model:
+  name: o4-mini
+  model_id: o4-mini
+  hidden_dim: 0
+  num_layers: 0
+  eval_only: true
+generation:
+  num_runs: 5
+  max_new_tokens: 32768
+  seed: 42
+paths:
+  problems: data/datasets/selected_500_sat.parquet
+  pipeline:
+    cot_traces: ${IRT_OUTPUTS_ROOT}/api/sat/o4-mini/cot_traces.jsonl
+  analysis:
+    cot_analysis: ${IRT_RESULTS_ROOT}/sat/o4-mini/cot_analysis/cot_analysis.parquet

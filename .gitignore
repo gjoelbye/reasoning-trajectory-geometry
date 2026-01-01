@@ -1,0 +1,41 @@
+# --- Local, unpublished material (kept on disk, excluded from the public repo) ---
+# (comments must be on their own line; a trailing '# ...' would become part of the pattern)
+# paper/ = manuscript source (on arXiv); release/ = HF upload toolkit
+# .env = local provider keys (never committed)
+paper/
+release/
+.env
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+*.egg
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- Tooling caches ---
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.cot_fix_state.json
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- One-time / disposable regeneration tooling (never published; delete after use) ---
+regenerate_all.log
+regenerate_all.sh
+regenerate_probing_h100.sh
+H100_REGEN_GUIDE.txt
+DTU_PREP.txt
+dtu_*.bsub
+
+# --- Regeneration scratch (derived from data/processed/01_difficulties; not used by the published notebooks) ---
+data/results/pooled_irt/

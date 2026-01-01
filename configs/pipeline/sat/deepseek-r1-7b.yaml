@@ -1,0 +1,26 @@
+model:
+  name: deepseek-r1-7b
+  model_id: deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
+  hidden_dim: 3584
+  num_layers: 28
+
+generation:
+  num_runs: 5
+  max_new_tokens: 32768
+  temperature: 0.6
+  top_p: 0.95
+  stride: 10
+  seed: 42
+
+paths:
+  problems: data/datasets/selected_500_sat.parquet
+
+  pipeline:
+    cot_traces: ${IRT_OUTPUTS_ROOT}/pipeline/sat/deepseek-r1-7b/cot_traces.jsonl
+    activations: ${IRT_OUTPUTS_ROOT}/pipeline/sat/deepseek-r1-7b/activations.h5
+
+  analysis:
+    cot_analysis: ${IRT_RESULTS_ROOT}/sat/deepseek-r1-7b/cot_analysis/cot_analysis.parquet
+    trajectories: ${IRT_RESULTS_ROOT}/sat/deepseek-r1-7b/trajectories/trajectory_summaries.parquet
+    probe_results: ${IRT_RESULTS_ROOT}/sat/deepseek-r1-7b/trajectories/probe_results_native.parquet
+    trajectory_traces: ${IRT_RESULTS_ROOT}/sat/deepseek-r1-7b/trajectories/trajectory_traces.parquet

@@ -1,0 +1,26 @@
+model:
+  name: phi-3.5
+  model_id: microsoft/Phi-3.5-mini-instruct
+  hidden_dim: 3072
+  num_layers: 32
+
+generation:
+  num_runs: 5
+  max_new_tokens: 32768
+  temperature: 0.6
+  top_p: 0.95
+  stride: 10
+  seed: 42
+
+paths:
+  problems: data/datasets/selected_500.parquet
+
+  pipeline:
+    cot_traces: ${IRT_OUTPUTS_ROOT}/pipeline/code/phi-3.5/cot_traces.jsonl
+    activations: ${IRT_OUTPUTS_ROOT}/pipeline/code/phi-3.5/activations.h5
+
+  analysis:
+    cot_analysis: ${IRT_RESULTS_ROOT}/code/phi-3.5/cot_analysis/cot_analysis.parquet
+    trajectories: ${IRT_RESULTS_ROOT}/code/phi-3.5/trajectories/trajectory_summaries.parquet
+    probe_results: ${IRT_RESULTS_ROOT}/code/phi-3.5/trajectories/probe_results_native.parquet
+    trajectory_traces: ${IRT_RESULTS_ROOT}/code/phi-3.5/trajectories/trajectory_traces.parquet

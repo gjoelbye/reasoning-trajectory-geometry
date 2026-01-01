@@ -1,0 +1,27 @@
+model:
+  name: qwen-14b
+  model_id: Qwen/Qwen2.5-14B-Instruct
+  hidden_dim: 5120
+  num_layers: 48
+  system_prompt: ""
+
+generation:
+  num_runs: 5
+  max_new_tokens: 32768
+  temperature: 0.6
+  top_p: 0.95
+  stride: 10
+  seed: 42
+
+paths:
+  problems: data/datasets/selected_500_math.parquet
+
+  pipeline:
+    cot_traces: ${IRT_OUTPUTS_ROOT}/pipeline/math/qwen-14b/cot_traces.jsonl
+    activations: ${IRT_OUTPUTS_ROOT}/pipeline/math/qwen-14b/activations.h5
+
+  analysis:
+    cot_analysis: ${IRT_RESULTS_ROOT}/math/qwen-14b/cot_analysis/cot_analysis.parquet
+    trajectories: ${IRT_RESULTS_ROOT}/math/qwen-14b/trajectories/trajectory_summaries.parquet
+    probe_results: ${IRT_RESULTS_ROOT}/math/qwen-14b/trajectories/probe_results_native.parquet
+    trajectory_traces: ${IRT_RESULTS_ROOT}/math/qwen-14b/trajectories/trajectory_traces.parquet

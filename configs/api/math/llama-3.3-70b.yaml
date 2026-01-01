@@ -1,0 +1,17 @@
+model:
+  name: llama-3.3-70b
+  model_id: together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo
+  hidden_dim: 0
+  num_layers: 0
+  eval_only: true
+generation:
+  num_runs: 5
+  max_new_tokens: 16384
+  seed: 42
+  temperature: 0.6
+paths:
+  problems: data/datasets/selected_500_math.parquet
+  pipeline:
+    cot_traces: ${IRT_OUTPUTS_ROOT}/api/math/llama-3.3-70b/cot_traces.jsonl
+  analysis:
+    cot_analysis: ${IRT_RESULTS_ROOT}/math/llama-3.3-70b/cot_analysis/cot_analysis.parquet
