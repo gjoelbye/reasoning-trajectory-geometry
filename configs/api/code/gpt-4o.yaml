@@ -1,0 +1,17 @@
+model:
+  name: gpt-4o
+  model_id: gpt-4o
+  hidden_dim: 0
+  num_layers: 0
+  eval_only: true
+generation:
+  num_runs: 5
+  max_new_tokens: 16384
+  seed: 42
+  temperature: 0.6
+paths:
+  problems: data/datasets/selected_500.parquet
+  pipeline:
+    cot_traces: /data/agjma/outputs/api/code/gpt-4o/cot_traces.jsonl
+  analysis:
+    cot_analysis: /data/agjma/outputs/api/code/gpt-4o/cot_analysis.parquet

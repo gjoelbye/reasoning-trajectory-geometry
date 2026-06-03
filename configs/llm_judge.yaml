@@ -1,0 +1,294 @@
+# ---------------------------------------------------------------------------
+# LLM Judge configuration for CoT reasoning pattern classification
+#
+# Separates prompt engineering from code so the prompt can be iterated
+# without code changes.  Used by src/llm_judge.py and scripts/run_llm_judge.py.
+# ---------------------------------------------------------------------------
+
+judge:
+  model: gemini-2.5-flash-lite
+  temperature: 0.0
+  max_output_tokens: 128
+
+segmentation:
+  method: sentence_window
+  context_sentences: 1
+
+batch:
+  poll_interval: 60
+  max_segments_per_batch: 60000
+
+categories:
+  self_correction:
+    regex_mapping: backtrack
+    definition: >-
+      The model identifies a flaw, error, or dead end in its own prior
+      reasoning and explicitly corrects course. Requires clear recognition
+      of an error, not just a transition to the next step.
+    positive_signals:
+      - Acknowledgment of mistakes ("that's wrong", "I made an error")
+      - Backtracking language ("let me reconsider", "going back to")
+      - Interjections that interrupt reasoning to fix something ("wait, actually")
+    negative_signals:
+      - Simply proceeding to a new step
+      - Refining an approach that was already working
+      - '"wait" or "actually" followed by normal continuation without acknowledging an error'
+    examples:
+      - "Wait, that's not right — the sum should be n(n+1)/2"
+      - "I made an error in the base case. Let me redo this."
+      - "Actually, this approach doesn't handle negative numbers, so I need to redo it with an offset."
+      - "Hmm, no — I forgot the modular arithmetic constraint."
+      - "Going back to the previous step — that inequality was reversed."
+
+  verification:
+    regex_mapping: verify
+    definition: >-
+      The model explicitly checks, tests, or validates a claim,
+      intermediate result, or final answer. Re-derivation or re-computation
+      counts only when explicitly framed as a check, test, sanity check,
+      or confirmation. Requires an explicit test or check, not just
+      computing the next step.
+    positive_signals:
+      - Plugging in specific values to test
+      - Running test cases or examples
+      - Sanity checks ("does this make sense?")
+      - Re-derivation or re-computation of a result
+    negative_signals:
+      - Simply stating a result
+      - Computing the next step without checking
+      - '"let me check" used informally without performing a genuine test'
+      - 'Computing a value without indicating it is being used to verify something (e.g. "For n=3, the formula gives 6" with no check framing)'
+    examples:
+      - "Let me verify: if n=3, we get 3*4/2 = 6. Correct."
+      - "Sanity check — the answer should be positive since all inputs are."
+      - "Let me plug in the sample input to confirm."
+      - "Does this hold for the boundary case? When n=1, f(1) = 1. Yes."
+      - "Testing with the second example: input [3,1,2] should give 5. We get 5. Good."
+
+  strategy_shifting:
+    regex_mapping: strategy
+    definition: >-
+      The model abandons or substantially changes its current
+      problem-solving approach. Requires clear abandonment or
+      reframing, not normal step progression.
+    positive_signals:
+      - Explicit references to trying something different
+      - Abandoning the current method ("this isn't working")
+      - Reframing from a new angle ("what if we think of it as...")
+    negative_signals:
+      - Routine transitions between steps within the same strategy
+      - Considering sub-cases as part of a planned approach
+      - '"let me try" as normal continuation within the same method'
+      - 'Casual mention of an alternative without abandoning the current method'
+    examples:
+      - "This brute force approach is too slow. Let me try DP instead."
+      - "This counting approach is getting messy. Instead, I'll use the pigeonhole principle."
+      - "What if we think of this as a graph problem?"
+      - "Maybe a greedy approach would work better here."
+      - "Instead of iterating, let me reformulate this as a matrix problem."
+
+  uncertainty_monitoring:
+    regex_mapping: hesitation
+    definition: >-
+      The model expresses genuine doubt, confusion, or low confidence
+      about its current reasoning. Requires explicit doubt about
+      correctness, not ordinary exploration or mild hedging.
+    positive_signals:
+      - Hedging language ("I'm not sure", "this might be wrong")
+      - Expressions of confusion ("this is tricky", "I'm confused")
+      - Qualified statements signaling uncertainty about the path
+    negative_signals:
+      - Systematic case analysis
+      - Exploring alternatives as part of a planned strategy
+      - 'Mild hedging like "maybe" or "perhaps" in otherwise confident reasoning'
+      - '"Maybe we can use X here" without expressing doubt about correctness or adequacy'
+    examples:
+      - "I'm not sure if this handles the edge case where n=0."
+      - "This part is confusing — the constraints seem contradictory."
+      - "I think this might work, but I'm not certain about overflow."
+      - "This is getting complicated — am I even on the right track?"
+      - "I'm worried this doesn't handle the case when the graph is disconnected."
+
+  problem_restatement:
+    regex_mapping: problem_reread
+    definition: >-
+      The model explicitly re-reads, restates, quotes, or refers back
+      to the original problem statement, constraints, or input spec.
+      Requires explicit reference to the problem source.
+    positive_signals:
+      - Direct references ("the problem says", "according to the constraints")
+      - Re-reading actions ("going back to the problem")
+      - Explicit citation of given information
+    negative_signals:
+      - Using problem information implicitly without referencing the source
+      - Restating one's own prior reasoning (not the problem)
+      - Using problem data in computation without citing where it came from
+    examples:
+      - "The problem states that 1 <= n <= 10^5, so we need O(n log n)."
+      - "Going back to the question — it asks for the minimum, not maximum."
+      - "According to the constraints, all values are positive integers."
+      - "Wait, let me re-read — the input says pairs, not individual values."
+      - "The problem specifies that the array is sorted — I should use that."
+
+  subgoal_decomposition:
+    regex_mapping: subgoal
+    definition: >-
+      The model breaks the problem into sub-problems, identifies key
+      steps, or lays out a structured plan of attack. Requires explicit
+      planning structure, not just sequencing words.
+    positive_signals:
+      - Enumerated steps ("Step 1", "First..., then...")
+      - Explicit decomposition ("break this into cases")
+      - Identification of key insights ("the key idea is")
+      - Top-level planning language ("our approach will be")
+    negative_signals:
+      - Simply proceeding to compute the next value
+      - Implicit structuring without explicit planning language
+      - '"first" or "next" used as sequencing words without explicit planning'
+    examples:
+      - "Let's break this into two parts: first handle even n, then odd n."
+      - "Step 1: Parse the input. Step 2: Build the graph."
+      - "The key insight is that this reduces to a shortest-path problem."
+      - "First I need to compute the prefix sums, then use binary search."
+      - "Our plan: (1) build adjacency list, (2) run BFS, (3) reconstruct path."
+
+disambiguation:
+  - >-
+    If the model corrects an error AND switches approach, mark BOTH
+    self_correction and strategy_shifting.
+  - >-
+    If the model restates the problem as part of decomposition, mark BOTH
+    problem_restatement and subgoal_decomposition.
+  - >-
+    If the model verifies a result and discovers it is wrong, mark BOTH
+    verification and self_correction.
+  - >-
+    If the model expresses uncertainty and then tries a new approach, mark
+    BOTH uncertainty_monitoring and strategy_shifting.
+
+domain_context:
+  code: >-
+    The model is solving a competitive programming problem (Codeforces).
+    Reasoning may include algorithm design, complexity analysis, edge case
+    handling, implementation planning, debugging code logic, and discussing
+    time and space constraints. Routine operations like parsing input format,
+    writing loops, or computing intermediate values are not behavioral
+    patterns.
+  math: >-
+    The model is solving a mathematical problem (MATH dataset, levels 1-5).
+    Reasoning may include algebraic manipulation, theorem application,
+    case analysis, geometric reasoning, numerical computation, and proof
+    construction. Routine operations like simplifying expressions, applying
+    formulas, or performing arithmetic are not behavioral patterns.
+  sat: >-
+    The model is solving a logical reasoning puzzle based on Boolean
+    satisfiability (SATBench). The model must determine whether a set of
+    logical conditions can all be satisfied simultaneously. Reasoning may
+    include systematic case analysis, constraint propagation, identifying
+    contradictions, and logical deduction. Routine operations like
+    restating conditions or simple variable substitutions are not
+    behavioral patterns.
+
+system_prompt: |
+  You are an expert annotator classifying reasoning behaviors in a single
+  segment of an AI model's chain-of-thought reasoning. The segment comes
+  from the model's internal thinking process while solving a problem — not
+  the final answer.
+
+  {domain_context}
+
+  Classify which of the following six cognitive patterns are present in this
+  segment. A segment may exhibit zero, one, or multiple patterns. Be
+  conservative: only mark a pattern as present when there is clear,
+  unambiguous evidence.
+
+  {category_definitions}
+
+  {disambiguation_rules}
+
+  EVIDENCE STANDARD: Only label based on what is explicitly present in the
+  segment text. Do not infer intent, prior reasoning, or confidence that is
+  not directly stated. Each label must be justified by concrete textual
+  evidence visible in the segment itself.
+
+  CUE WORD WARNING: Common expressions like "wait," "actually," "maybe,"
+  "first," "let me," or "hmm" are NOT sufficient evidence by themselves.
+  These words frequently appear in routine reasoning without any of the six
+  behaviors. Only mark a category if the surrounding language clearly
+  establishes the specific behavior beyond the cue word alone.
+
+  COMMON FALSE POSITIVES — The following should NOT trigger any label:
+  - "So we have..." followed by computation (routine step, not decomposition)
+  - "Now let's compute..." or "now we can..." (normal sequencing, not
+    strategy shifting)
+  - "First, note that..." when simply starting a derivation without planning
+    multiple steps (not subgoal decomposition)
+  - "Wait, so if x = 3 then..." continuing reasoning without acknowledging
+    any error (not self-correction)
+  - "This gives us 42" (stating a result, not verification unless explicitly
+    checking against an expected value)
+  - Mathematical case splits like "If n is even... if n is odd..." as part of
+    systematic analysis (not uncertainty monitoring)
+  - "I think the answer is..." when stating a conclusion (not uncertainty
+    unless explicitly qualified with doubt about correctness)
+  - "Let me think about this..." as generic reasoning preamble (not any
+    specific category)
+  - "Hmm, interesting..." or "OK so..." as filler expressions (not any
+    specific category)
+  - Moving from one computation step to the next without commenting on the
+    previous approach (not strategy shifting)
+  - Restating intermediate results the model just computed (not problem
+    restatement — that requires referencing the original problem statement)
+  - "We need to find..." when summarizing the goal as part of ongoing work
+    (not problem restatement unless quoting the original problem text)
+  - "Let me recalculate..." when simply redoing arithmetic without stating
+    the previous result was wrong (not self-correction without error
+    acknowledgment)
+  - "Suppose x = k..." when introducing a variable (not subgoal
+    decomposition — that requires explicit planning structure)
+  - "There are two cases..." as part of mathematical case analysis (not
+    strategy shifting — systematic case analysis is not a change of
+    approach)
+  - "For n=3, the formula gives 6" without framing it as a check or test
+    (not verification — stating a value is not the same as checking it)
+  - "Maybe we can try BFS" as a casual suggestion without expressing doubt
+    about correctness (not uncertainty monitoring)
+
+  CALIBRATION: The majority of reasoning segments contain routine computation,
+  intermediate algebraic steps, or straightforward explanation that does not
+  match any of the six categories. These segments should have ALL six fields
+  set to false. Only mark a pattern as true when there is clear, unambiguous
+  evidence in the text. When in doubt, mark false.
+
+  Expected label distribution: A typical trace of 10 segments might have 6-8
+  segments with no patterns (all false), 2-3 segments with exactly one pattern,
+  and rarely more than one pattern per segment. If you find yourself labeling
+  most segments, you are likely being too permissive.
+
+# ---------------------------------------------------------------------------
+# OpenAI judge settings
+# ---------------------------------------------------------------------------
+
+judge_openai:
+  model: gpt-4.1-nano
+  temperature: 0.0
+  max_tokens: 128
+
+batch_openai:
+  poll_interval: 60
+  max_requests_per_batch: 50000
+
+# ---------------------------------------------------------------------------
+# Local vLLM judge settings
+# ---------------------------------------------------------------------------
+
+judge_local:
+  model: Qwen/Qwen2.5-7B-Instruct
+  temperature: 0
+  max_tokens: 128
+  batch_size: 2000
+  dtype: auto
+  gpu_memory_utilization: 0.90
+  max_model_len: 8192
+  tensor_parallel_size: 1
+  enable_prefix_caching: true

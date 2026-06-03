@@ -1,0 +1,17 @@
+model:
+  name: gemini-2.5-flash-lite
+  model_id: gemini/gemini-2.5-flash-lite
+  hidden_dim: 0
+  num_layers: 0
+  eval_only: true
+generation:
+  num_runs: 5
+  max_new_tokens: 32768
+  seed: 42
+  temperature: 0.6
+paths:
+  problems: data/datasets/selected_500_sat.parquet
+  pipeline:
+    cot_traces: /data/agjma/outputs/api/sat/gemini-2.5-flash-lite/cot_traces.jsonl
+  analysis:
+    cot_analysis: /data/agjma/outputs/api/sat/gemini-2.5-flash-lite/cot_analysis.parquet

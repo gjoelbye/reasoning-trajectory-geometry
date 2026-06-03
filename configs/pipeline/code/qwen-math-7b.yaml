@@ -1,0 +1,27 @@
+model:
+  name: qwen-math-7b
+  model_id: Qwen/Qwen2.5-Math-7B-Instruct
+  hidden_dim: 3584
+  num_layers: 28
+  system_prompt: ""
+
+generation:
+  num_runs: 5
+  max_new_tokens: 32768
+  temperature: 0.6
+  top_p: 0.95
+  stride: 10
+  seed: 42
+
+paths:
+  problems: data/datasets/selected_500.parquet
+
+  pipeline:
+    cot_traces: ${IRT_OUTPUTS_ROOT}/pipeline/code/qwen-math-7b/cot_traces.jsonl
+    activations: ${IRT_OUTPUTS_ROOT}/pipeline/code/qwen-math-7b/activations.h5
+
+  analysis:
+    cot_analysis: ${IRT_RESULTS_ROOT}/code/qwen-math-7b/cot_analysis/cot_analysis.parquet
+    trajectories: ${IRT_RESULTS_ROOT}/code/qwen-math-7b/trajectories/trajectory_summaries.parquet
+    probe_results: ${IRT_RESULTS_ROOT}/code/qwen-math-7b/trajectories/probe_results_native.parquet
+    trajectory_traces: ${IRT_RESULTS_ROOT}/code/qwen-math-7b/trajectories/trajectory_traces.parquet

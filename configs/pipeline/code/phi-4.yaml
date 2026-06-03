@@ -1,0 +1,26 @@
+model:
+  name: phi-4
+  model_id: microsoft/phi-4
+  hidden_dim: 5120
+  num_layers: 40
+
+generation:
+  num_runs: 5
+  max_new_tokens: 32768
+  temperature: 0.6
+  top_p: 0.95
+  stride: 10
+  seed: 42
+
+paths:
+  problems: data/datasets/selected_500.parquet
+
+  pipeline:
+    cot_traces: ${IRT_OUTPUTS_ROOT}/pipeline/code/phi-4/cot_traces.jsonl
+    activations: ${IRT_OUTPUTS_ROOT}/pipeline/code/phi-4/activations.h5
+
+  analysis:
+    cot_analysis: ${IRT_RESULTS_ROOT}/code/phi-4/cot_analysis/cot_analysis.parquet
+    trajectories: ${IRT_RESULTS_ROOT}/code/phi-4/trajectories/trajectory_summaries.parquet
+    probe_results: ${IRT_RESULTS_ROOT}/code/phi-4/trajectories/probe_results_native.parquet
+    trajectory_traces: ${IRT_RESULTS_ROOT}/code/phi-4/trajectories/trajectory_traces.parquet

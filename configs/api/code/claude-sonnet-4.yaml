@@ -1,0 +1,17 @@
+model:
+  name: claude-sonnet-4
+  model_id: anthropic/claude-sonnet-4-20250514
+  hidden_dim: 0
+  num_layers: 0
+  eval_only: true
+generation:
+  num_runs: 5
+  max_new_tokens: 32768
+  seed: 42
+  temperature: 0.6
+paths:
+  problems: data/datasets/selected_500.parquet
+  pipeline:
+    cot_traces: ${IRT_OUTPUTS_ROOT}/api/code/claude-sonnet-4/cot_traces.jsonl
+  analysis:
+    cot_analysis: ${IRT_RESULTS_ROOT}/code/claude-sonnet-4/cot_analysis/cot_analysis.parquet

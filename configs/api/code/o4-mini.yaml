@@ -1,0 +1,16 @@
+model:
+  name: o4-mini
+  model_id: o4-mini
+  hidden_dim: 0
+  num_layers: 0
+  eval_only: true
+generation:
+  num_runs: 5
+  max_new_tokens: 32768
+  seed: 42
+paths:
+  problems: data/datasets/selected_500.parquet
+  pipeline:
+    cot_traces: /data/agjma/outputs/api/code/o4-mini/cot_traces.jsonl
+  analysis:
+    cot_analysis: /data/agjma/outputs/api/code/o4-mini/cot_analysis.parquet

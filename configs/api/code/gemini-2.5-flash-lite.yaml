@@ -1,0 +1,17 @@
+model:
+  name: gemini-2.5-flash-lite
+  model_id: gemini/gemini-2.5-flash-lite
+  hidden_dim: 0
+  num_layers: 0
+  eval_only: true
+generation:
+  num_runs: 5
+  max_new_tokens: 32768
+  seed: 42
+  temperature: 0.6
+paths:
+  problems: data/datasets/selected_500.parquet
+  pipeline:
+    cot_traces: ${IRT_OUTPUTS_ROOT}/api/code/gemini-2.5-flash-lite/cot_traces.jsonl
+  analysis:
+    cot_analysis: ${IRT_RESULTS_ROOT}/code/gemini-2.5-flash-lite/cot_analysis/cot_analysis.parquet

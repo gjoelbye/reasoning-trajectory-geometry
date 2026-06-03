@@ -1,0 +1,16 @@
+model:
+  name: gemini-2.5-pro
+  model_id: gemini/gemini-2.5-pro
+  hidden_dim: 0
+  num_layers: 0
+  eval_only: true
+generation:
+  num_runs: 5
+  max_new_tokens: 32768
+  seed: 42
+paths:
+  problems: data/datasets/selected_500.parquet
+  pipeline:
+    cot_traces: /data/agjma/outputs/api/code/gemini-2.5-pro/cot_traces.jsonl
+  analysis:
+    cot_analysis: /data/agjma/outputs/api/code/gemini-2.5-pro/cot_analysis.parquet

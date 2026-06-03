@@ -1,0 +1,73 @@
+cff-version: 1.2.0
+title: "Reasoning Models Don't Just Think Longer, They Move Differently (code)"
+message: "If you use this code, please cite the accompanying paper."
+type: software
+license: CC-BY-SA-4.0
+url: "https://github.com/gjoelbye/reasoning-trajectory-geometry"
+authors:
+  - family-names: Gjølbye
+    given-names: Anders
+    email: gjoelbye@cs.stanford.edu
+    affiliation: "Technical University of Denmark & Stanford University"
+  - family-names: Hansen
+    given-names: Lars Kai
+    affiliation: "Technical University of Denmark"
+  - family-names: Koyejo
+    given-names: Sanmi
+    affiliation: "Stanford University"
+preferred-citation:
+  type: article
+  title: "Reasoning Models Don't Just Think Longer, They Move Differently"
+  authors:
+    - family-names: Gjølbye
+      given-names: Anders
+      email: gjoelbye@cs.stanford.edu
+    - family-names: Hansen
+      given-names: Lars Kai
+    - family-names: Koyejo
+      given-names: Sanmi
+  year: 2026
+  journal: "arXiv preprint"
+  url: "https://arxiv.org/abs/2605.15454"
+  identifiers:
+    - type: other
+      value: "arXiv:2605.15454"
+      description: "arXiv identifier"
+references:
+  - type: data
+    title: "CoT Hidden-State Trajectories"
+    authors:
+      - family-names: Gjølbye
+        given-names: Anders
+    year: 2026
+    license: CC-BY-SA-4.0
+    url: "https://huggingface.co/datasets/gjoelbye/cot-hidden-state-trajectories"
+  - type: data
+    title: "Easy2Hard-Bench: Standardized Difficulty Labels for Profiling LLM Performance and Generalization"
+    authors:
+      - family-names: Ding
+        given-names: Mucong
+      - family-names: Huang
+        given-names: Furong
+    year: 2024
+    license: CC-BY-SA-4.0
+    url: "https://huggingface.co/datasets/furonghuang-lab/Easy2Hard-Bench"
+  - type: data
+    title: "Measuring Mathematical Problem Solving with the MATH Dataset"
+    authors:
+      - family-names: Hendrycks
+        given-names: Dan
+      - family-names: Steinhardt
+        given-names: Jacob
+    year: 2021
+    license: MIT
+    url: "https://huggingface.co/datasets/nlile/hendrycks-MATH-benchmark"
+  - type: data
+    title: "SATBench: Benchmarking LLMs' Logical Reasoning via Automated Puzzle Generation from SAT Formulas"
+    authors:
+      - family-names: Wei
+        given-names: Anjiang
+      - family-names: Aiken
+        given-names: Alex
+    year: 2025
+    url: "https://huggingface.co/datasets/LLM4Code/SATBench"

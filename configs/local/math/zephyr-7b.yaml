@@ -1,0 +1,22 @@
+model:
+  name: zephyr-7b
+  model_id: HuggingFaceH4/zephyr-7b-beta
+  hidden_dim: 4096
+  num_layers: 32
+  eval_only: true
+
+generation:
+  num_runs: 5
+  max_new_tokens: 16384
+  temperature: 0.6
+  top_p: 0.95
+  seed: 42
+
+paths:
+  problems: data/datasets/selected_500_math.parquet
+
+  pipeline:
+    cot_traces: ${IRT_OUTPUTS_ROOT}/local/math/zephyr-7b/cot_traces.jsonl
+
+  analysis:
+    cot_analysis: ${IRT_RESULTS_ROOT}/math/zephyr-7b/cot_analysis/cot_analysis.parquet

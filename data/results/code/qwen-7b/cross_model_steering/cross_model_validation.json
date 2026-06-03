@@ -1,0 +1,134 @@
+{
+  "self_correction_lengthonly": {
+    "r2_cv": 0.24608774697100091,
+    "rho2_proj": 0.4256115935951021,
+    "selectivity": 6.298333007560513,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 6.693995336795242e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  },
+  "self_correction_pure": {
+    "r2_cv": 0.24575993053574624,
+    "rho2_proj": 0.4248500240615174,
+    "selectivity": 6.472167839187,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 6.683459421229224e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  },
+  "verification_lengthonly": {
+    "r2_cv": 0.18616061011606305,
+    "rho2_proj": 0.39383304108305284,
+    "selectivity": 4.510390845151532,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 6.166535357580363e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  },
+  "verification_pure": {
+    "r2_cv": 0.18607515898960744,
+    "rho2_proj": 0.39088776813911646,
+    "selectivity": 4.6074765111441485,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 6.182786302719016e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  },
+  "strategy_shifting_lengthonly": {
+    "r2_cv": 0.49450771549426015,
+    "rho2_proj": 0.6112205901318554,
+    "selectivity": 4.477370268283426,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 6.952492447889835e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  },
+  "strategy_shifting_pure": {
+    "r2_cv": 0.488260648218819,
+    "rho2_proj": 0.6004885761720292,
+    "selectivity": 4.588546517341685,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 6.937903634078261e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  },
+  "uncertainty_monitoring_lengthonly": {
+    "r2_cv": 0.5048604456299834,
+    "rho2_proj": 0.5732066685187225,
+    "selectivity": 5.148410060754168,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 6.591462467264095e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  },
+  "uncertainty_monitoring_pure": {
+    "r2_cv": 0.4983092488629815,
+    "rho2_proj": 0.5590728746057693,
+    "selectivity": 5.217264810101332,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 6.383615230504178e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  },
+  "problem_restatement_lengthonly": {
+    "r2_cv": 0.029730601476819517,
+    "rho2_proj": 0.23930428743779086,
+    "selectivity": 4.781455705956047,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 6.629856574265885e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  },
+  "problem_restatement_pure": {
+    "r2_cv": 0.030289453622405604,
+    "rho2_proj": 0.23915635929398135,
+    "selectivity": 4.833195717819928,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 6.635233403247329e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  },
+  "subgoal_decomposition_lengthonly": {
+    "r2_cv": 0.279048723888914,
+    "rho2_proj": 0.5016246066671145,
+    "selectivity": 8.222582432809974,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 7.034043537225654e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  },
+  "subgoal_decomposition_pure": {
+    "r2_cv": 0.27918892974887227,
+    "rho2_proj": 0.5023955348694183,
+    "selectivity": 8.265527254901102,
+    "perm_p": 0.001996007984031936,
+    "perm_rho2_mean": 7.097436247961306e-05,
+    "passes_r2": true,
+    "passes_selectivity": true,
+    "passes_perm": true,
+    "passes_all": true
+  }
+}
