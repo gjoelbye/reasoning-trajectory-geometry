@@ -1,10 +1,10 @@
 # --- Local, unpublished material (kept on disk, excluded from the public repo) ---
 # (comments must be on their own line; a trailing '# ...' would become part of the pattern)
-# paper/ = manuscript source (on arXiv); release/ = HF upload toolkit; .env = provider keys
+# paper/ = manuscript source (on arXiv); release/ = HF upload toolkit
+# .env = local provider keys (never committed)
 paper/
 release/
 .env
-!.env.example
 
 # --- Python ---
 __pycache__/
@@ -34,6 +34,8 @@ regenerate_all.log
 regenerate_all.sh
 regenerate_probing_h100.sh
 H100_REGEN_GUIDE.txt
+DTU_PREP.txt
+dtu_*.bsub
 
 # --- Regeneration scratch (derived from data/processed/01_difficulties; not used by the published notebooks) ---
 data/results/pooled_irt/

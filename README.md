@@ -24,11 +24,6 @@ cd reasoning-trajectory-geometry
 pip install -e .
 ```
 
-For raw-data regeneration with API calibration models, set provider keys in
-a `.env` file at the repo root (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`,
-`GEMINI_API_KEY`, `DEEPSEEK_API_KEY`, `TOGETHER_API_KEY`,
-`OPENROUTER_API_KEY`); see `.env.example` for the template.
-
 ## Repository layout
 
 ```
